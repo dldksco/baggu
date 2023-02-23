@@ -33,7 +33,7 @@ spring:
         registration:
           kakao:
             authorization-grant-type: authorization_code
-            client-id: dcea227af64fcf0366810e14b850e4d6
+            client-id: ${client-id}
             #테스트용 로컬 리다이렉트
             redirect-uri: http://localhost:3000/kakaoLogin
             # redirect-uri: https://test.baggu.shop/kakaoLogin
