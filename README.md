@@ -329,11 +329,11 @@ _- 나에게 가치없는 물건을 가치있는 물건으로 -_
 ![](https://i.imgur.com/I1AkwKm.gif)
 
 # 교환 수락
-![](../img/accept.gif)
+![](./img/accept.gif)
 
 
 # 교환 신청
-![](../img/offer.gif)
+![](./img/offer.gif)
 # 예약 중
 
 ![](https://i.imgur.com/3LTariB.gif)
