@@ -1,0 +1,71 @@
+version: '3.8'
+services:
+  baggu-elasticsearch-deploy:
+    container_name: baggu-elasticsearch-deploy
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+    environment:
+      node.name: single-node
+      cluster.name: baggudeploy
+      discovery.type: single-node
+      ELASTIC_PASSWORD: basicpassword
+    ports:
+      - 9202:9200
+    build:
+      dockerfile: Dockerfile
+      context: ./elasticsearch
+      args:
+        ELK_VERSION: 7.15.2
+    restart: always
+  baggu-redis-deploy:
+    container_name: baggu-redis-deploy
+    build:
+      dockerfile: Dockerfile-deploy
+      context: ./redis
+    ports:
+      - "6382:6379"
+    restart: always
+  baggu-backend:
+    container_name: baggu-backend
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    environment:
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=A708
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://baggu-database-deploy:3306/baggu
+    ports:
+      - "9999:9999"
+    restart: always
+
+  baggu-chat:
+    container_name: baggu-chat
+    build:
+      dockerfile: Dockerfile
+      context: ./chat
+    ports:
+      - "9997:9997"
+    restart: always
+  baggu-notify:
+    container_name: baggu-notify
+    build:
+      dockerfile: Dockerfile
+      context: ./notify
+    ports:
+      - "9998:9998"
+    restart: always
+  baggu-frontend:
+    container_name: baggu-frontend
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    restart: always
+
+networks:
+  default:
+    external:
+      name: cd_network
